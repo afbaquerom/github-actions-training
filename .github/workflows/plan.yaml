@@ -7,18 +7,19 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       TF_ACTION_WORKING_DIR: '.'
-      AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: 'us-east-1'
     defaults:
       run:
-        working-directory: ${{ env.TF_ACTION_WORKING_DIR }} 
+        working-directory: ${{ env.TF_ACTION_WORKING_DIR }}
     steps:
     - uses: actions/checkout@v2
     - uses: hashicorp/setup-terraform@v1
     - name: Terraform fmt
       id: fmt
       run: terraform fmt
-    - name: Terraform Init
+          - name: Terraform Init
       id: init
       run: terraform init
     - name: Terraform Validate
@@ -27,7 +28,7 @@ jobs:
     - name: Terraform Plan
       id: plan
       run: terraform plan -no-color
-    - uses: actions/github-script@v2
+          - uses: actions/github-script@v2
       if: github.event_name == 'pull_request'
       env:
         PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
