@@ -11,7 +11,7 @@ jobs:
       AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     defaults:
       run:
-        working-directory: ${{ env.TF_ACTION_WORKING_DIR }}
+        working-directory: ${{ env.TF_ACTION_WORKING_DIR }} 
     steps:
     - uses: actions/checkout@v2
     - uses: hashicorp/setup-terraform@v1
